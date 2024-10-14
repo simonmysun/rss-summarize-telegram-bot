@@ -114,7 +114,7 @@ async def check_rss_feed():
             result.append(token)
         except Exception as e:
           logger.error(f'ERROR: {repr(e)}')
-          message += f'{render(''.join(result))}\n{render('**ERROR**: LLM API request failed: '}{repr(e)}'
+          message += f'{render(''.join(result))}\n{render('**ERROR**: LLM API request failed: ')}{repr(e)}'
         if len(result) == 0:
           logger.error('No result returned.')
           message += f'{render('**ERROR**: No result returned.')}\n'
