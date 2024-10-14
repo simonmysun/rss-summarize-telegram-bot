@@ -1,0 +1,9 @@
+FROM python:alpine3.20
+
+COPY ./requirements.txt /app/requirements.txt
+
+WORKDIR /app/
+
+RUN pip install -q -r requirements.txt
+
+CMD ["python", "main.py"]

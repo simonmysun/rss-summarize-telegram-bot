@@ -1,0 +1,15 @@
+{
+  "last_delivered": "1970-01-01T00:00:00Z",
+  "feeds": [
+    {
+      "name": "BestComments",
+      "url": "https://hnrss.org/newcomments",
+      "last_published": []
+    },
+    {
+      "name": "TrendingPosts",
+      "url": "https://hnrss.org/newest?points=150",
+      "last_published": []
+    }
+  ]
+}

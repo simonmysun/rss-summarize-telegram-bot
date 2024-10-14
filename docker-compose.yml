@@ -1,0 +1,20 @@
+name: rss-summarize-telegram-bot
+
+services:
+  rss-summarize-telegram-bot:
+    container_name: rss-summarize-telegram-bot
+    build: .
+    init: true
+    volumes:
+      - ./.env:/app/.env:ro
+      - ./prompts/:/app/prompts/:ro
+      - ./state.json:/app/state.json:rw
+    restart: unless-stopped
+  rss-summarize-telegram-bot-dev:
+    container_name: rss-summarize-telegram-bot-dev
+    build: ./Dockerfile.dev
+    entrypoint: [ "echo", "Service disabled" ] # uncomment this line to enable
+    init: true
+    volumes:
+      - ./:/app/:rw
+    restart: no
