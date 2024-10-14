@@ -46,7 +46,8 @@ def send_message_to_telegram(message):
   payload = {
     'chat_id': TELEGRAM_CHANNEL_ID,
     'text': message,
-    'parse_mode': 'HTML'
+    'parse_mode': 'HTML',
+    'link_preview_options': 'prefer_small_media'
   }
   response = requests.post(url, data=payload)
   logger.debug(response.text)
