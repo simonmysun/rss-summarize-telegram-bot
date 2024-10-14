@@ -155,7 +155,7 @@ async def check_rss_feed():
         throttle.call()
         send_message_to_telegram(message)
         feed['last_published'].append(entry.id)
-        feed['last_published'] = feed['last_published'][-100:]
+        feed['last_published'] = feed['last_published'][-200:]
         STATE['last_delivered'] = time.strftime('%Y-%m-%dT%H:%M:%SZ')
         save_state()
       else:
