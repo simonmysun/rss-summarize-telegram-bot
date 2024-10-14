@@ -8,7 +8,7 @@
     },
     {
       "name": "TrendingPosts",
-      "url": "https://hnrss.org/newest?points=150",
+      "url": "https://hnrss.org/newest?points=200&count=200",
       "last_published": []
     }
   ]
