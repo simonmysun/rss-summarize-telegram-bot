@@ -95,6 +95,7 @@ async def check_rss_feed():
           logger.error(f'No content or discussion is fetched. Task aborted.')
           message += f'{render('**ERROR**: No content or discussion is fetched. Task aborted.')}\n'
           content = f'{final_url}'
+        content = entry.summary + '\n\n' + content
         prompt = ''
         if uri.netloc in ['news.ycombinator.com'] and not discussion_uri:
           logger.info('This is a comment on HN')
