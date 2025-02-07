@@ -40,7 +40,7 @@ prompt_template_summarize_comment = ''
 with open('prompts/summarize_comment.txt', 'r') as f_prompt_template_summarize_comment:
   prompt_template_summarize_comment = f_prompt_template_summarize_comment.read()
 
-def send_message_to_telegram(message):
+def send_message_to_telegram(message, preview_url):
   logger.info(f'Sending message to Telegram: {message[:50]}...')
   url = f'https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage'
   payload = {
@@ -48,7 +48,9 @@ def send_message_to_telegram(message):
     'text': message,
     'parse_mode': 'HTML',
     'link_preview_options': json.dumps({
-      'prefer_small_media': True
+      'is_disabled': False,
+      'prefer_small_media': True,
+      'url': preview_url
     })
   }
   response = requests.post(url, data=payload)
@@ -128,7 +130,7 @@ async def check_rss_feed():
         discussion = ''
         if discussion_uri:
           message += f'<b><a href="{discussion_uri.geturl()}">Discussion</a></b>\n'
-          (final_url, discussion) = await fetch_content(discussion_uri.geturl())
+          (_, discussion) = await fetch_content(discussion_uri.geturl())
           if len([line for line in discussion.split('\n') if line.strip()]) == 0:
             logger.error(f'No discussion is fetched. Task aborted.')
             message += f'{render('**ERROR**: No discussion is fetched. Task aborted.')}\n'
@@ -157,7 +159,7 @@ async def check_rss_feed():
             message += f'<blockquote expandable>{render(''.join(result))}</blockquote>'
         
         throttle.call()
-        send_message_to_telegram(message)
+        send_message_to_telegram(message, final_url)
         feed['last_published'].append(entry.id)
         feed['last_published'] = feed['last_published'][-1000:]
         STATE['last_delivered'] = time.strftime('%Y-%m-%dT%H:%M:%SZ')
