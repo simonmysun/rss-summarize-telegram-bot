@@ -84,14 +84,13 @@ async def check_rss_feed():
         logger.info(f'New entry found: {entry.title}')
         published_since = int((time.time() - time.mktime(entry.published_parsed)) / 60)
         
-        message = f''
-        message += f'<b>{feed['name']}</b>\n<a href="{entry.link}">{entry.title}</a>'
-        message += f' ({published_since} minutes ago)'
-        message += f'<blockquote expandable>{render(entry.summary)}</blockquote>'
-        
         (uri, discussion_uri) = process_url(entry.comments)
-        
         (final_url, content) = await fetch_content(uri.geturl())
+        
+        message = f''
+        message += f'<b>{feed['name']}</b>\n<a href="{discussion_uri.geturl()}">{entry.title}</a>'
+        message += f' ({published_since} minutes ago)'
+        
         message += f'<b><a href="{final_url}">Content</a></b>\n'
         if len([line for line in content.split('\n') if line.strip()]) == 0:
           logger.error(f'No content or discussion is fetched. Task aborted.')
