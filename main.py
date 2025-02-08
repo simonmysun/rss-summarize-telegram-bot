@@ -89,7 +89,7 @@ async def check_rss_feed():
         
         message = f''
         message += f'<b>{feed['name']}</b>\n<a href="{discussion_uri.geturl()}">{entry.title}</a>'
-        message += f' ({published_since} minutes ago)'
+        message += f' ({published_since} minutes ago)\n'
         
         message += f'<b><a href="{final_url}">Content</a></b>\n'
         if len([line for line in content.split('\n') if line.strip()]) == 0:
