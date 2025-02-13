@@ -88,7 +88,7 @@ async def check_rss_feed():
         (final_url, content) = await fetch_content(uri.geturl())
         
         message = f''
-        if discussion_rui:
+        if discussion_uri:
           message += f'<b>{feed['name']}</b>\n<a href="{discussion_uri.geturl()}">{entry.title}</a>'
         else:
           message += f'<b>{feed['name']}</b>\n<a href="{uri.geturl()}">{entry.title}</a>'
