@@ -161,7 +161,10 @@ async def check_rss_feed():
             message += f'<blockquote expandable>{render(''.join(result))}</blockquote>'
         
         throttle.call()
-        send_message_to_telegram(message, final_url)
+        if final_url and len(final_url) > 0:
+          send_message_to_telegram(message, preview_url=final_url)
+        else:
+          send_message_to_telegram(message, preview_url=discussion_uri.geturl())
         feed['last_published'].append(entry.id)
         feed['last_published'] = feed['last_published'][-1000:]
         STATE['last_delivered'] = time.strftime('%Y-%m-%dT%H:%M:%SZ')
