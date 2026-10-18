@@ -1,7 +1,7 @@
 import logging
 logger = logging.getLogger(__name__)
 
-import requests
+from curl_cffi import requests
 
 from html2text import HTML2Text
 h2t = HTML2Text()
@@ -38,17 +38,17 @@ async def fetch_content(url: str) -> (str, str):
         "setJavaScriptEnabled": True,
         "url": url,
         "waitForTimeout": 3000
-      }, timeout=60)
+      }, timeout=60, impersonate='chrome')
       probe_redirection = requests.get(url, allow_redirects=True, headers={
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
-      }, timeout=3)
+      }, timeout=3, impersonate='chrome')
       if probe_redirection.history:
         logger.info(f'Redirected to {probe_redirection.url}')
         url = probe_redirection.url
     else:
       response = requests.get(url, allow_redirects=True, headers={
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36'
-      }, timeout=60)
+      }, timeout=60, impersonate='chrome')
     if response.status_code == 200:
       if response.history:
         logger.info(f'Redirected to {response.url}')
